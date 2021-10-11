@@ -1,6 +1,5 @@
 from solver.ProperSolver import ProperSolver
 from generator.instance import Instance
-from solver.NastySolver import NastySolver
 
 class Verifier:
     def __init__(self, instance_name, solver=None):
