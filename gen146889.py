@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from generator import Generator
+from generator.generator import Generator
 
-prefix = 'instances'
+prefix = 'in_146889_'
 print('Generating instances with prefix ' + prefix)
-Generator.create_series_into_folder(prefix)
+Generator.create_series(prefix)
 print('Done')
