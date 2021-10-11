@@ -6,10 +6,11 @@ class ProperSolver(Solver):
         time = 0
         current_task = None
         for i in task_order:
-            time = max(time, instance.r[i])
+            wait_time = max(0, instance.r[i] - time)
+            active_switch_time = 0
             if current_task is not None:
-                time += instance.s[current_task][i]
-            time += instance.p[i]
+                active_switch_time = max(0, instance.s[current_task][i] - wait_time)
+            time += wait_time + active_switch_time + instance.p[i]
             l = time - instance.d[i]
             if l_max is None:
                 l_max = l
