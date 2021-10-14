@@ -1,6 +1,5 @@
 from generator.instance import Instance
 
-
 class Solver:
     def solve(self, input_filename):
         instance = Instance().load(input_filename)

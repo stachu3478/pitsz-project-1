@@ -2,12 +2,11 @@ from solver.ProperSolver import ProperSolver
 from generator.instance import Instance
 
 class Verifier:
-    def __init__(self, instance_name, solver=None):
-        instance_filename = 'in_' + instance_name
+    def __init__(self, instance_filename, output_filename, solver=None):
         self.instance = Instance().load(instance_filename)
         if solver is not None:
-            solver.solve(instance_name)
-        self._load_solution('out_' + instance_name)
+            solver.solve(instance_filename)
+        self._load_solution(output_filename)
 
     def _load_solution(self, filename):
         f = open(filename, 'r')

@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from solver.PanicSolver import PanicSolver
 from pathlib import Path
 
-solver = PanicSolver()
+from solver.PanicSolver import PanicSolver
+from solver.NastySolver import NastySolver
+
+solver = NastySolver()
 if len(sys.argv) > 1:
     instance_path = sys.argv[1]
     solver.solve(instance_path)
