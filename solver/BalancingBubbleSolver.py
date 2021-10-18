@@ -1,12 +1,11 @@
-from solver.ProperSolver import ProperSolver
 
-class BubbleSolver(ProperSolver):
-    # I'm bubble. Tasks flow in my list like bubbles.
+from solver.BalancingSolver import BalancingSolver
+
+class BalancingBubbleSolver(BalancingSolver):
+    # I'm balancing. I try different weights to find perfect center of window for the tasks.
     def task_order(self, instance):
-        task_order = [i for i in range(instance.n)]
-        task_order.sort(key=lambda i: instance.d[i] + instance.r[i])
-        best_task_order = task_order
-        least_l_max = self.l_max(instance, task_order)
+        best_task_order = super().task_order(instance)
+        least_l_max = self.l_max(instance, best_task_order)
         for i in range(instance.n - 1):
             new_task_order = best_task_order.copy()
             new_task_order[i], new_task_order[i + 1] = new_task_order[i + 1], new_task_order[i]
