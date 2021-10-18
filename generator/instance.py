@@ -22,13 +22,13 @@ class Instance:
 
     def load(self, path):
         f = open(path, 'r')
-        self._set_n(int(f.readline()))
-        prds = [f.readline().split(' ') for _ in self._task_range]
+        self._set_n(int(f.readline().strip()))
+        prds = [f.readline().strip().split(' ') for _ in self._task_range]
         for i, prd in enumerate(prds):
             self.p[i] = int(prd[0])
             self.r[i] = int(prd[1])
             self.d[i] = int(prd[2])
-        self.s = [[s_i_j for s_i_j in map(lambda s_i_j: int(s_i_j), f.readline().split(' '))] for _ in self._task_range]
+        self.s = [[s_i_j for s_i_j in map(lambda s_i_j: int(s_i_j), f.readline().strip().split(' '))] for _ in self._task_range]
         return self
 
     def _randomize(self, total_processing_time=None, total_base_ready_time=None, min_window=None, max_window=None, min_ready_time_sub_rate=1.0, max_ready_time_sub_rate=None, min_s=None, max_s=None):

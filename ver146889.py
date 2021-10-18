@@ -23,7 +23,7 @@ if len(sys.argv) > 2:
 else:
     for instance_path in Path('./').iterdir():
         if instance_path.name.startswith('in_'):
-            print(instance_path)
+            #print(instance_path)
             verifier = Verifier(instance_path.name, instance_path.name.replace('in', 'out'))
             verifier.verify()
 

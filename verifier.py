@@ -23,6 +23,8 @@ class Verifier:
         proper_solver = ProperSolver()
         valid_l_max = proper_solver.l_max(self.instance, self.task_order)
         if valid_l_max != self.l_max:
-            print('Invalid l_max provided: ' + str(self.l_max) + '. Should be ' + str(valid_l_max))
+            #print('Invalid l_max provided: ' + str(self.l_max) + '. Should be ' + str(valid_l_max))
+            print(valid_l_max)
             return 1
+        print(valid_l_max)
         return 0
