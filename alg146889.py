@@ -30,7 +30,7 @@ elif Path('alg_files.txt').exists():
         print(str(l_max))
     print('Ordered timings in ms:')
     for timing in timings:
-        print(str(timing * 1000).replace('.', ','))
+        print(str(timing).replace('.', ','))
 else:
     for instance_path in Path('./').iterdir():
         if instance_path.name.startswith('in_'):
