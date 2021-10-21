@@ -20,6 +20,14 @@ if len(sys.argv) > 2:
     else:
         verifier = Verifier(instance_path, alg_or_result_path)
     verifier.verify()
+elif Path('alg_files.txt').exists():
+    f = open('alg_files.txt')
+    while True:
+        instance_filename = f.readline().strip()
+        if instance_filename == '':
+            break
+        verifier = Verifier(instance_filename, instance_filename.replace('in', 'out'))
+        verifier.verify()
 else:
     for instance_path in Path('./').iterdir():
         if instance_path.name.startswith('in_'):

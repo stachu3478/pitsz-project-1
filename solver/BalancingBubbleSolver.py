@@ -6,10 +6,12 @@ class BalancingBubbleSolver(BalancingSolver):
     def task_order(self, instance):
         best_task_order = super().task_order(instance)
         least_l_max = self.l_max(instance, best_task_order)
-        #sij_task_order = self.solve_as_1_sij_cmax(instance)
-        #sij_l_max = self.l_max(instance, sij_task_order)
-        #if sij_l_max < least_l_max:
-        #    best_task_order = sij_task_order
+        sij_task_order = self.solve_as_1_sij_cmax(instance)
+        sij_l_max = self.l_max(instance, sij_task_order)
+        if sij_l_max < least_l_max:
+            print("better as cmax: " + str(sij_l_max))
+            best_task_order = sij_task_order
+            least_l_max = sij_l_max
         for i in range(instance.n - 1):
             new_task_order = best_task_order.copy()
             new_task_order[i], new_task_order[i + 1] = new_task_order[i + 1], new_task_order[i]
@@ -80,24 +82,24 @@ class BalancingBubbleSolver(BalancingSolver):
 
     def solve_as_1_sij_cmax(self, instance):
         task_s_reservation = [0 for _ in range(instance.n)]
-        task_s_ijs = []
-        for i in range(instance.n):
+        least_r = instance.r[0]
+        best_by_r = 0
+        for j in range(1, instance.n):
+            if instance.r[j] < least_r:
+                least_r = instance.r[j]
+                best_by_r = j
+        task_order = [best_by_r]
+        task_s_reservation[best_by_r] = 1
+        for i in range(1, instance.n):
+            task = task_order[i - 1]
             least_s = None
             best_j = None
             for j in range(0, instance.n):
                 if task_s_reservation[j] == 1:
                     continue
-                if (least_s is None) or (instance.s[i][j] < least_s):
-                    least_s = instance.s[i][j]
+                if (least_s is None) or (instance.s[task][j] < least_s):
+                    least_s = instance.s[task][j]
                     best_j = j
             task_s_reservation[best_j] = 1
-            task_s_ijs.append(best_j)
-        hi_s = task_s_ijs[0]
-        worst_s = 0
-        for j in range(1, instance.n):
-            if task_s_ijs[j] > hi_s:
-                hi_s = task_s_ijs[j]
-                worst_s = j
-        task_s_ijs.remove(worst_s)
-        task_s_ijs.insert(0, worst_s)
-        return task_s_ijs
+            task_order.append(best_j)
+        return task_order

@@ -8,8 +8,9 @@ from solver.BalancedSolver import BalancedSolver
 from solver.BalancingBubbleSolver import BalancingBubbleSolver
 from solver.BalancingSolver import BalancingSolver
 from solver.BubbleSolver import BubbleSolver
+from solver.NastySolver import NastySolver
 
-solver = BalancingBubbleSolver()
+solver = BalancedSolver()
 if len(sys.argv) > 1:
     instance_path = sys.argv[1]
     solver.solve(instance_path)
