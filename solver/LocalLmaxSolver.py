@@ -1,6 +1,6 @@
 from solver.ProperSolver import ProperSolver
 
-class LocalLminSolver(ProperSolver):
+class LocalLmaxSolver(ProperSolver):
     # I add tasks that minimize l max first
     def task_order(self, instance):
         task_order = []
@@ -8,18 +8,18 @@ class LocalLminSolver(ProperSolver):
         time = 0
         current_task = None
         for _ in range(instance.n):
-            l_min = None
-            best_task_l = None
+            l_max = None
+            worst_task_i = None
             for i in range(instance.n):
                 if tasks_used[i] == 1:
                     continue
                 c = self.end_time(instance, time, current_task, i)
                 l = c - instance.d[i]
-                if (l_min is None) or (l < l_min):
-                    best_task_l = i
-                    l_min = l
-            task_order.append(best_task_l)
-            time = self.end_time(instance, time, current_task, best_task_l)
-            current_task = best_task_l
-            tasks_used[best_task_l] = 1
+                if (l_max is None) or (l > l_max):
+                    worst_task_i = i
+                    l_max = l
+            task_order.append(worst_task_i)
+            time = self.end_time(instance, time, current_task, worst_task_i)
+            current_task = worst_task_i
+            tasks_used[worst_task_i] = 1
         return task_order
