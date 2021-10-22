@@ -8,8 +8,11 @@ from solver.BalancedSolver import BalancedSolver
 from solver.BalancingBubbleSolver import BalancingBubbleSolver
 from solver.BalancingSolver import BalancingSolver
 from solver.BubbleSolver import BubbleSolver
+from solver.InsertionSolver import InsertionSolver
 from solver.LocalCdmaxCminSolver import LocalCdmaxCminSolver
 from solver.LocalCdmaxSolver import LocalCdmaxSolver
+from solver.LocalCminSolver import LocalCminSolver
+from solver.LocalLdmax0CminSolver import LocalLdmax0CminSolver
 from solver.LocalLdmaxSolver import LocalLdmaxSolver
 from solver.LocalLdminCminSolver import LocalLdminCminSolver
 from solver.LocalLmax0CminSolver import LocalLmax0CminSolver
@@ -18,7 +21,7 @@ from solver.LocalLmaxSolver import LocalLmaxSolver
 from solver.NastySolver import NastySolver
 from solver.SijCmaxSolver import SijCmaxSolver
 
-solver = LocalLdmaxSolver()
+solver = InsertionSolver()
 if len(sys.argv) > 1:
     instance_path = sys.argv[1]
     solver.solve(instance_path)
