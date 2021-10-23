@@ -6,12 +6,12 @@ class BalancingBubbleSolver(BalancingSolver):
     def task_order(self, instance):
         best_task_order = super().task_order(instance)
         least_l_max = self.l_max(instance, best_task_order)
-        sij_task_order = self.solve_as_1_sij_cmax(instance)
-        sij_l_max = self.l_max(instance, sij_task_order)
-        if sij_l_max < least_l_max:
-            print("better as cmax: " + str(sij_l_max))
-            best_task_order = sij_task_order
-            least_l_max = sij_l_max
+        #sij_task_order = self.solve_as_1_sij_cmax(instance)
+        #sij_l_max = self.l_max(instance, sij_task_order)
+        #if sij_l_max < least_l_max:
+        #    print("better as cmax: " + str(sij_l_max))
+        #    best_task_order = sij_task_order
+        #    least_l_max = sij_l_max
         for i in range(instance.n - 1):
             new_task_order = best_task_order.copy()
             new_task_order[i], new_task_order[i + 1] = new_task_order[i + 1], new_task_order[i]

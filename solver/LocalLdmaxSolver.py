@@ -22,7 +22,7 @@ class LocalLdmaxSolver(ProperSolver):
                     worst_task_i = i
                     ld_min = ld
                     l_at = l
-            print('ld_max ' + str(ld_min) + " l " + str(l_at))
+            #print('ld_max ' + str(ld_min) + " l " + str(l_at))
             task_order.append(worst_task_i)
             time = self.end_time(instance, time, current_task, worst_task_i)
             current_task = worst_task_i
