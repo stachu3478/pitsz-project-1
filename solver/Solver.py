@@ -1,16 +1,14 @@
-import time
 from generator.instance import Instance
 
 class Solver:
-    def solve(self, input_filename):
+    def solve(self, input_filename, output_filename=None):
         instance = Instance().load(input_filename)
-        start = time.perf_counter()
         task_order = self.task_order(instance)
         l_max = self.l_max(instance, task_order)
-        end = time.perf_counter()
-        output_filename = input_filename.replace('in', 'out')
+        if output_filename is None:
+            output_filename = input_filename.replace('in', 'out').replace('.txt', '_146889.txt')
         self._save(output_filename, task_order, l_max)
-        return l_max, end - start
+        return l_max
 
     def _save(self, output_filename, task_order, l_max):
         f = open(output_filename, 'w')
