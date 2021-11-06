@@ -3,7 +3,7 @@ import random
 
 class Instance:
     def create(self, size):
-        instance = Instance(size)
+        instance = self(size)
         instance._randomize()
         return instance
 

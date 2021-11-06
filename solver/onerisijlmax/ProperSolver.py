@@ -1,7 +1,7 @@
-from solver.Solver import Solver
+from solver.SolverBase import SolverBase
 
-class ProperSolver(Solver):
-    def l_max(self, instance, task_order):
+class ProperSolver(SolverBase):
+    def criterion_value(self, instance, task_order):
         l_max = None
         worst_task = None
         time = 0
