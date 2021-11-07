@@ -10,4 +10,7 @@ class Q4rwuVerifier(VerifierBase):
         self.task_order = [self._read_line(f), self._read_line(f), self._read_line(f), self._read_line(f)]
 
     def _read_line(self, f):
-        return list(map(lambda i: int(i), f.readline().strip().split(' ')))
+        tasks = f.readline().strip().split(' ')
+        if (tasks[0] == '') and (len(tasks) == 1): # no tasks inserted at this machine
+            return []
+        return list(map(lambda i: int(i), tasks))

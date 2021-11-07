@@ -1,4 +1,4 @@
-from solver.ProperSolver import ProperSolver
+from solver.onerisijlmax.ProperSolver import ProperSolver
 
 class PanicSolver(ProperSolver):
     # I'm panic. I look for tasks that have to be done first.

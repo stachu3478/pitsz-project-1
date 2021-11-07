@@ -1,4 +1,4 @@
-from solver.ProperSolver import ProperSolver
+from solver.onerisijlmax.ProperSolver import ProperSolver
 
 class StaticInsertionSolver(ProperSolver):
     # I'm insertion. I insert tasks in my own way.
