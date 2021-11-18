@@ -35,8 +35,8 @@ class VerifierBase:
                     self.task_order[i] -= 1
         valid_criterion_value = proper_solver.criterion_value(self.instance, self.task_order)
         if valid_criterion_value != self.criterion_value:
-            print('Invalid criterion_value provided: ' + str(self.criterion_value) + '. Should be ' + str(valid_criterion_value))
-            #print(valid_l_max)
+            #print('Invalid criterion_value provided: ' + str(self.criterion_value) + '. Should be ' + str(valid_criterion_value))
+            print(valid_criterion_value)
             return 1
         print(valid_criterion_value)
         return 0

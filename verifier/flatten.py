@@ -5,3 +5,4 @@ def flatten(array):
     for i in range(len(array)):
         for j in range(len(array[i])):
             flattened_array.append(array[i][j])
+    return flattened_array

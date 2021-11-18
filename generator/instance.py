@@ -55,9 +55,11 @@ class Instance:
             self.s[i][i] = 0
         
 
-    def _random_p(self, total_processing_time):
-        total_processing_time_cuts = [0]
-        for _ in range(self.n - 1):
+    def _random_p(self, total_processing_time, cut_count=None, cuts=[]):
+        if cut_count is None:
+            cut_count = self.n - 1
+        total_processing_time_cuts = [0] + cuts
+        for _ in range(cut_count):
             total_processing_time_cuts.append(random.randint(0, total_processing_time))
         total_processing_time_cuts.sort()
         total_processing_time_cuts.append(total_processing_time)
@@ -65,8 +67,8 @@ class Instance:
         try:
             p.index(0) # should not have any 0 time tasks
         except ValueError:
-            return p
-        return self._random_p(total_processing_time), total_processing_time_cuts
+            return p, total_processing_time_cuts
+        return self._random_p(total_processing_time)
 
     def _set_n(self, n):
         self.n = n

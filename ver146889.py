@@ -23,7 +23,7 @@ if len(sys.argv) > 2:
         verifier = Q4rwuVerifier(instance_path, alg_or_result_path)
     verifier.verify()
 else:# Path('alg_files.txt').exists():
-    my_id = '146889'
+    my_id = '136564'
     alg_id = '146889'
     for n in range(50, 550, 50):
         out = f"out_{my_id}_{alg_id}_{n}.txt"

@@ -32,7 +32,7 @@ class Q4rwuInstance(Instance):
             self.w[i] = int(prdw[3])
         return self
 
-    def _randomize(self, total_processing_time=None, total_base_ready_time=None, min_window=None, max_window=None, min_ready_time_sub_rate=1.0, max_ready_time_sub_rate=2.0, weight_multiplier=random.randint(2, 10)):
+    def _randomize(self, total_processing_time=None, total_base_ready_time=None, min_window=0, max_window=0, min_ready_time_sub_rate=1.0, max_ready_time_sub_rate=1.0, weight_multiplier=random.randint(2, 10)):
         self.b = [1] + [1 + abs(random.normalvariate(0, 1)) for _ in range(3)]
         total_b =  sum(self.b)
         if total_processing_time is None:
@@ -45,9 +45,33 @@ class Q4rwuInstance(Instance):
             min_window = random.randint(0, max_window)
         if total_base_ready_time is None:
             total_base_ready_time = int(total_processing_time / total_b)
-        self.p = self._random_p(total_processing_time)
+        machine_cuts = []
+        cut_total = 0
+        for i in range(3):
+            cut_total += int(round(total_processing_time * self.b[i] / total_b))
+            machine_cuts.append(cut_total)
+        print(machine_cuts, total_processing_time)
+        self.p, cuts = self._random_p(total_processing_time, cut_count=self.n - 4, cuts=machine_cuts)
+        machine_cut_index = 0
+        task_delay_change = 0
+        machine_ids = []
+        print([cuts.index(machine_cuts[i]) for i in range(3)])
+        for i, cut in enumerate(cuts[1:]):
+            if (machine_cut_index < 3) and (cut > machine_cuts[machine_cut_index]):
+                task_delay_change = machine_cuts[machine_cut_index]
+                machine_cut_index += 1
+            cuts[i] -= task_delay_change
+            machine_ids.append(machine_cut_index)
+        #print(cuts)
         ready_time_sub_rate_min_to_max = max_ready_time_sub_rate - min_ready_time_sub_rate
-        self.r = [max(0, int(random.randint(0, total_base_ready_time) - self.p[i] * min_ready_time_sub_rate + random.random() * ready_time_sub_rate_min_to_max)) for i in self._task_range]
+        self.r = [max(0, round(cuts[i] / self.b[machine_ids[i]] - random.random() * ready_time_sub_rate_min_to_max)) for i, p in enumerate(self.p)]
         self.d = [self.r[i] + self.p[i] + random.randint(min_window, max_window) for i in self._task_range]
         self.w = [weight_multiplier ** math.floor(abs(random.normalvariate(0, 1))) for _ in self._task_range]
+        print(machine_ids.count(0), machine_ids.count(0) + machine_ids.count(1), machine_ids.count(0) + machine_ids.count(1) + machine_ids.count(2), machine_ids.count(0) + machine_ids.count(1) + machine_ids.count(2) + machine_ids.count(3))
+        shuffled_ids = [i for i in self._task_range]
+        random.shuffle(shuffled_ids)
+        self.p = [self.p[i] for i in shuffled_ids]
+        self.r = [self.r[i] for i in shuffled_ids]
+        self.d = [self.d[i] for i in shuffled_ids]
+        self.w = [self.w[i] for i in shuffled_ids]
         
