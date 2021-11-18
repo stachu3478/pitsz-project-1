@@ -1,3 +1,6 @@
+from verifier.flatten import flatten
+
+
 class VerifierBase:
     def __init__(self, instance_filename, output_filename, instance_klass=None, comparison_class=None, solver=None):
         self.instance = instance_klass().load(instance_filename)
@@ -15,12 +18,7 @@ class VerifierBase:
         raise NotImplementedError('Not yet implemented!')
 
     def verify(self):
-        flattened_tasks = self.task_order
-        if type(flattened_tasks[0]) != int:
-            flattened_tasks = []
-            for i in range(len(self.task_order)):
-                for j in range(len(self.task_order[i])):
-                    flattened_tasks.append(self.task_order[i][j])
+        flattened_tasks = flatten(self.task_order)
         if len(flattened_tasks) != self.instance.n:
             print('Invalid task order length: ' + str(len(flattened_tasks)) + '. Should be ' + str(self.instance.n))
             return 2
