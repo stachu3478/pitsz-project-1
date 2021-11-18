@@ -1,7 +1,7 @@
 from solver.Q4riwu.ProperSolver import ProperSolver
 
-class StaticInsertionDDLPTHWSM(ProperSolver):
-    # I'm insertion. I insert tasks in my own way.
+class StaticInsertionDLLPTHWSM(ProperSolver):
+    # I'm Static Insertion Dead Lined Least Processing Time Highest Weight Slowest Machine. I insert tasks in my own way.
     def task_order(self, instance):
         task_preinsertion_order = [i for i in range(instance.n)]
         task_preinsertion_order.sort(key=lambda i: instance.p[i] * instance.w[i] - instance.d[i] + instance.r[i], reverse=True)
@@ -21,8 +21,8 @@ class StaticInsertionDDLPTHWSM(ProperSolver):
                 for _, l in enumerate(task_order[machine_id]):
                     l_end_time = task_start_times[l] + instance.p[l] / speed
                     task_end_time = base_start_time + instance.p[task] / speed
-                    l_overlaps_task = ((task_end_time > task_start_times[l]) and (task_start_times[l] > base_start_time))
-                    if l_overlaps_task or ((task_start_times[l] < base_start_time) and (l_end_time > base_start_time)):
+                    l_overlaps_task = ((task_end_time >= task_start_times[l]) and (task_start_times[l] >= base_start_time))
+                    if l_overlaps_task or ((task_start_times[l] <= base_start_time) and (base_start_time <= l_end_time)):
                         base_start_time = task_start_times[l] - instance.p[task] / speed
                         if base_start_time < instance.r[task]:
                             conflict = True

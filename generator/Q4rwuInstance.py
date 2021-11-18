@@ -32,17 +32,17 @@ class Q4rwuInstance(Instance):
             self.w[i] = int(prdw[3])
         return self
 
-    def _randomize(self, total_processing_time=None, total_base_ready_time=None, min_window=None, max_window=None, min_ready_time_sub_rate=1.0, max_ready_time_sub_rate=None, weight_multiplier=random.randint(2, 10)):
+    def _randomize(self, total_processing_time=None, total_base_ready_time=None, min_window=None, max_window=None, min_ready_time_sub_rate=1.0, max_ready_time_sub_rate=2.0, weight_multiplier=random.randint(2, 10)):
+        self.b = [1] + [1 + abs(random.normalvariate(0, 1)) for _ in range(3)]
+        total_b =  sum(self.b)
         if total_processing_time is None:
             total_processing_time = random.randint(self.n ** 2, self.n ** 3)
         if max_ready_time_sub_rate is None:
-            max_ready_time_sub_rate = random.randint(min_ready_time_sub_rate, int(math.sqrt(self.n)))
-        if min_window is None:
-            min_window = random.randint(0, int(math.sqrt(total_processing_time)))
+            max_ready_time_sub_rate = min_ready_time_sub_rate + random.random() * ((int(math.sqrt(self.n) / total_b)) - min_ready_time_sub_rate)
         if max_window is None:
-            max_window = random.randint(min_window, total_processing_time)
-        self.b = [1] + [1 + abs(random.normalvariate(0, 1)) for _ in range(3)]
-        total_b =  sum(self.b)
+            max_window = random.randint(0, int(total_processing_time / self.n))
+        if min_window is None:
+            min_window = random.randint(0, max_window)
         if total_base_ready_time is None:
             total_base_ready_time = int(total_processing_time / total_b)
         self.p = self._random_p(total_processing_time)

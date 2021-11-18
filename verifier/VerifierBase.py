@@ -16,7 +16,7 @@ class VerifierBase:
 
     def verify(self):
         flattened_tasks = self.task_order
-        if flattened_tasks[0] is not int:
+        if type(flattened_tasks[0]) != int:
             flattened_tasks = []
             for i in range(len(self.task_order)):
                 for j in range(len(self.task_order[i])):

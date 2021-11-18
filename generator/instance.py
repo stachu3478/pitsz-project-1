@@ -66,7 +66,7 @@ class Instance:
             p.index(0) # should not have any 0 time tasks
         except ValueError:
             return p
-        return self._random_p(total_processing_time)
+        return self._random_p(total_processing_time), total_processing_time_cuts
 
     def _set_n(self, n):
         self.n = n

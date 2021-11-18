@@ -4,9 +4,9 @@
 import sys
 from solver.Q4riwu.NastySolver import NastySolver
 from generator.Q4rwuInstance import Q4rwuInstance
-from solver.Q4riwu.StaticInsertionDDLPTHWSM import StaticInsertionDDLPTHWSM
+from solver.Q4riwu.StaticInsertionDLLPTHWSM import StaticInsertionDLLPTHWSM
 
-solver = StaticInsertionDDLPTHWSM()
+solver = StaticInsertionDLLPTHWSM()
 if len(sys.argv) > 2:
     instance_path = sys.argv[1]
     output_filename = sys.argv[2]
