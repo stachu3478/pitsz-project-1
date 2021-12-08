@@ -3,46 +3,39 @@ import random
 
 from generator.instance import Instance
 
-class Q4rwuInstance(Instance):
+class F4EDInstance(Instance):
     def _set_n(self, n):
         self.n = n
         self._task_range = range(n)
-        self.b = [1.0 for _ in range(4)]
-        self.p = [0 for _ in self._task_range]
-        self.r = [0 for _ in self._task_range]
+        self.a = [0 for _ in self._task_range]
+        self.b = [0 for _ in self._task_range]
         self.d = [0 for _ in self._task_range]
-        self.w = [0 for _ in self._task_range]
+        self.p = [[0 for _ in range(4)] for _ in self._task_range]
 
     def save(self, path):
         f = open(path, 'w')
         f.write(str(self.n) + '\n')
-        f.write(' '.join(map(lambda b: str(b), self.b)) + '\n')
-        f.write('\n'.join(map(lambda j: str(self.p[j]) + ' ' + str(self.r[j]) + ' ' + str(self.d[j]) + ' ' + str(self.w[j]), self._task_range)) + '\n')
+        f.write('\n'.join(map(lambda j: ' '.join(self.p[j]) + ' ' + str(self.d[j]) + ' ' + str(self.a[j]) + ' ' + str(self.b[j]), self._task_range)) + '\n')
         f.close()
 
     def load(self, path):
         f = open(path, 'r')
         self._set_n(int(f.readline().strip()))
-        self.b = [b for b in map(lambda b: float(b), f.readline().strip().split(' '))]
-        prdws = [f.readline().strip().split(' ') for _ in self._task_range]
-        for i, prdw in enumerate(prdws):
-            self.p[i] = int(prdw[0])
-            self.r[i] = int(prdw[1])
-            self.d[i] = int(prdw[2])
-            self.w[i] = int(prdw[3])
+        pdabs = [f.readline().strip().split(' ') for _ in self._task_range]
+        for i, pdab in enumerate(pdabs):
+            pdab.p[i] = [int(pdab[0]), int(pdab[1]), int(pdab[2]), int(pdab[3])]
+            pdab.d[i] = int(pdab[4])
+            pdab.a[i] = int(pdab[5])
+            pdab.b[i] = int(pdab[6])
         return self
 
-    def _randomize(self, total_processing_time=None, min_window=0, max_window=None, min_ready_time_sub_rate=1.0, max_ready_time_sub_rate=1.0, weight_multiplier=random.randint(2, 10)):
-        self.b = [1] + [1 + abs(random.normalvariate(0, 1)) for _ in range(3)]
-        total_b =  sum(self.b)
+    def _randomize(self, total_processing_time=None, min_dd=None, max_dd=None, weight_multiplier=random.randint(2, 10)):
         if total_processing_time is None:
             total_processing_time = random.randint(self.n ** 2, self.n ** 3)
-        if max_ready_time_sub_rate is None:
-            max_ready_time_sub_rate = min_ready_time_sub_rate + random.random() * ((int(math.sqrt(self.n) / total_b)) - min_ready_time_sub_rate)
-        if max_window is None:
-            max_window = random.randint(0, int(total_processing_time / self.n))
-        if min_window is None:
-            min_window = random.randint(0, max_window)
+        if max_dd is None:
+            max_dd = random.randint(0, int(total_processing_time / self.n))
+        if min_dd is None:
+            min_dd = random.randint(0, min_dd)
         machine_cuts = []
         cut_total = 0
         for i in range(3):

@@ -41,7 +41,6 @@ class StaticInsertionDLLPTHWSM(ProperSolver):
         for ordering in task_order:
             ordering.sort(key=lambda i: task_start_times[i])
         task_order[0] += late_tasks
-        print('expected value: ' + str(self.expected_value(instance, late_tasks)))
         return task_order
 
     def expected_value(self, instance, late_tasks):

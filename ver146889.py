@@ -35,11 +35,5 @@ else:# Path('alg_files.txt').exists():
         end = time.perf_counter()
         #print(str(end - start).replace('.', ','))
         verifier = Q4rwuVerifier(in_file, out)
-        verifier.verify()
-#else:
-#    for instance_path in Path('./').iterdir():
-#        if instance_path.name.startswith('in_'):
-#            #print(instance_path)
-#            verifier = Verifier(instance_path.name, instance_path.name.replace('in', 'out'))
-#            verifier.verify()
+            #verifier.verify()
 
